@@ -1,4 +1,4 @@
-// Test FirFilter using quantized signal samples from a text file.
+// Test the FIR filter, including backpressure behavior.
 
 `timescale 1ns / 1ps
 
@@ -6,28 +6,33 @@ module FirFilterTestbench;
 
     logic clk;
     logic reset;
-    logic input_valid;
+
     logic signed [15:0] input_data;
+    logic               input_valid;
+    logic               input_ready;
 
-    logic output_valid;
     logic signed [15:0] output_data;
+    logic               output_valid;
+    logic               output_ready;
 
-    integer input_file;
-    integer output_file;
-    integer scan_result;
-    integer sample;
+    logic signed [15:0] held_output;
 
-    // Instantiate the FIR filter being tested.
+
     FirFilter dut (
         .clk(clk),
         .reset(reset),
+
         .input_valid(input_valid),
+        .input_ready(input_ready),
         .input_data(input_data),
+
         .output_valid(output_valid),
+        .output_ready(output_ready),
         .output_data(output_data)
     );
 
-    // Generate a 100 MHz clock.
+
+    // 100 MHz clock.
     initial begin
         clk = 1'b0;
 
@@ -36,84 +41,124 @@ module FirFilterTestbench;
         end
     end
 
-    // Save every valid FIR output sample.
-    always @(negedge clk) begin
-        if (output_valid && output_file != 0) begin
-            $fdisplay(
-                output_file,
-                "%0d",
-                output_data
-            );
-        end
-    end
 
-    // Reset the filter and process input samples.
     initial begin
+
         reset = 1'b1;
-        input_valid = 1'b0;
+
         input_data = 16'sd0;
+        input_valid = 1'b0;
 
-        input_file = $fopen(
-            "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
-            "r"
-        );
+        output_ready = 1'b1;
 
-        output_file = $fopen(
-            "C:/Users/muram/fpga-signal-processing/simulation/data/rtl_filtered_samples.txt",
-            "w"
-        );
 
-        if (input_file == 0) begin
-            $display("Error: Could not open signal_samples.txt");
-            $finish;
-        end
-
-        if (output_file == 0) begin
-            $display("Error: Could not create rtl_filtered_samples.txt");
-            $finish;
-        end
-
-        #20;
+        repeat (3) @(posedge clk);
 
         reset = 1'b0;
 
-        while (!$feof(input_file)) begin
-            scan_result = $fscanf(
-                input_file,
-                "%d\n",
-                sample
-            );
 
-            if (scan_result == 1) begin
-                send_sample(sample);
+        // Send the first sample.
+        send_sample(16'sd1000);
+
+
+        // Wait until the FIR produces an output.
+        wait (output_valid == 1'b1);
+
+        @(negedge clk);
+
+        $display(
+            "FIR output before backpressure = %0d",
+            output_data
+        );
+
+
+        // Stop accepting the FIR output.
+        output_ready = 1'b0;
+
+        held_output = output_data;
+
+
+        // Keep the FIR stalled for 5 clock cycles.
+        repeat (5) begin
+
+            @(negedge clk);
+
+            if (output_valid != 1'b1) begin
+                $display(
+                    "FAIL: output_valid dropped during backpressure."
+                );
+                $finish;
             end
+
+            if (output_data != held_output) begin
+                $display(
+                    "FAIL: output_data changed during backpressure."
+                );
+                $finish;
+            end
+
+            if (input_ready != 1'b0) begin
+                $display(
+                    "FAIL: input_ready stayed high during backpressure."
+                );
+                $finish;
+            end
+
         end
 
-        $fclose(input_file);
 
-        // Wait long enough for the final FIR output to be written.
-        repeat (10) begin
-            @(posedge clk);
-        end
+        $display(
+            "PASS: FIR held its output during backpressure."
+        );
 
-        $fclose(output_file);
+
+        // Allow the output to move again.
+        output_ready = 1'b1;
+
+        @(negedge clk);
+
+
+        // Send another sample after the stall.
+        send_sample(16'sd2000);
+
+        wait (output_valid == 1'b1);
+
+        @(negedge clk);
+
+        $display(
+            "FIR output after backpressure = %0d",
+            output_data
+        );
+
+        $display(
+            "PASS: FIR resumed after backpressure."
+        );
+
 
         $finish;
+
     end
 
-    // Send one valid input sample to the FIR filter.
+
+    // Send one sample only when the FIR is ready.
     task send_sample(
         input logic signed [15:0] sample_value
     );
         begin
+
             @(negedge clk);
 
             input_data = sample_value;
             input_valid = 1'b1;
 
+            while (!input_ready) begin
+                @(negedge clk);
+            end
+
             @(negedge clk);
 
             input_valid = 1'b0;
+
         end
     endtask
 
