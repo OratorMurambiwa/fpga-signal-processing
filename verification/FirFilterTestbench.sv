@@ -49,33 +49,30 @@ module FirFilterTestbench;
         input_data = 16'sd0;
         input_valid = 1'b0;
 
-        output_ready = 1'b1;
+        output_ready = 1'b0;
 
 
         repeat (3) @(posedge clk);
 
+        @(negedge clk);
         reset = 1'b0;
 
 
-        // Send the first sample.
+        // Send a sample while the receiver is not ready.
         send_sample(16'sd1000);
 
 
-        // Wait until the FIR produces an output.
+        // Wait for the FIR to produce its output.
         wait (output_valid == 1'b1);
 
         @(negedge clk);
 
+        held_output = output_data;
+
         $display(
-            "FIR output before backpressure = %0d",
+            "FIR output during backpressure = %0d",
             output_data
         );
-
-
-        // Stop accepting the FIR output.
-        output_ready = 1'b0;
-
-        held_output = output_data;
 
 
         // Keep the FIR stalled for 5 clock cycles.
@@ -112,14 +109,16 @@ module FirFilterTestbench;
         );
 
 
-        // Allow the output to move again.
+        // Let the receiver accept the held output.
         output_ready = 1'b1;
 
+        @(posedge clk);
         @(negedge clk);
 
 
         // Send another sample after the stall.
         send_sample(16'sd2000);
+
 
         wait (output_valid == 1'b1);
 
@@ -140,7 +139,7 @@ module FirFilterTestbench;
     end
 
 
-    // Send one sample only when the FIR is ready.
+    // Hold valid until the FIR accepts the sample.
     task send_sample(
         input logic signed [15:0] sample_value
     );
@@ -151,9 +150,14 @@ module FirFilterTestbench;
             input_data = sample_value;
             input_valid = 1'b1;
 
-            while (!input_ready) begin
-                @(negedge clk);
+
+            // A transfer happens when valid and ready
+            // are both high on a rising clock edge.
+            do begin
+                @(posedge clk);
             end
+            while (!input_ready);
+
 
             @(negedge clk);
 
