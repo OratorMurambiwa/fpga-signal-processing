@@ -1,4 +1,4 @@
-// Test the full signal-processing pipeline.
+// Test the full signal-processing pipeline with backpressure.
 
 `timescale 1ns / 1ps
 
@@ -116,10 +116,6 @@ module FullPipelineTestbench;
         && (fft_input_count == 10'd1023);
 
 
-    // Keep the FFT output ready during this test.
-    assign fft_output_ready = 1'b1;
-
-
     // 100 MHz clock.
     initial begin
         clk = 1'b0;
@@ -132,21 +128,28 @@ module FullPipelineTestbench;
 
     // Keep track of how many samples enter the FFT.
     always_ff @(posedge clk) begin
+
         if (reset) begin
+
             fft_input_count <= 10'd0;
+
         end
         else if (fft_input_valid && fft_input_ready) begin
+
             if (fft_input_last) begin
                 fft_input_count <= 10'd0;
             end
             else begin
                 fft_input_count <= fft_input_count + 10'd1;
             end
+
         end
+
     end
 
 
     initial begin
+
         reset = 1'b1;
 
         fir_input_data = 16'sd0;
@@ -155,34 +158,34 @@ module FullPipelineTestbench;
         fft_config_data = 16'd0;
         fft_config_valid = 1'b0;
 
+        fft_output_ready = 1'b1;
+
         input_count = 0;
+
 
         input_file = $fopen(
             "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
             "r"
         );
 
-        if (input_file == 0) begin
-            $display(
-                "ERROR: Could not open input file."
-            );
 
+        if (input_file == 0) begin
+            $display("ERROR: Could not open input file.");
             $finish;
         end
 
 
         repeat (5) @(posedge clk);
 
+        @(negedge clk);
         reset = 1'b0;
+
 
         send_fft_configuration();
 
 
         // Send one full FFT frame.
-        while (
-            !$feof(input_file)
-            && input_count < 1024
-        ) begin
+        while (!$feof(input_file) && input_count < 1024) begin
 
             scan_result = $fscanf(
                 input_file,
@@ -191,17 +194,46 @@ module FullPipelineTestbench;
             );
 
             if (scan_result == 1) begin
-                send_sample(sample);
 
+                send_sample(sample);
                 input_count = input_count + 1;
+
             end
+
         end
+
 
         $fclose(input_file);
 
 
+        // Wait until FFT output starts.
+        wait (fft_output_valid == 1'b1);
+
+        @(negedge clk);
+
+        $display("Applying FFT output backpressure.");
+
+        fft_output_ready = 1'b0;
+
+
+        // Stall FFT output for 10 clock cycles.
+        repeat (10) begin
+            @(posedge clk);
+        end
+
+
+        @(negedge clk);
+
+        fft_output_ready = 1'b1;
+
+        $display("Releasing FFT output backpressure.");
+
+
         // Wait for the strongest frequency result.
         wait (peak_valid == 1'b1);
+
+        @(negedge clk);
+
 
         $display(
             "Full pipeline peak bin = %0d",
@@ -213,62 +245,78 @@ module FullPipelineTestbench;
             peak_magnitude
         );
 
+
         if (
             peak_bin == 10'd51
             || peak_bin == 10'd52
         ) begin
+
             $display(
-                "PASS: Full pipeline found the expected frequency."
+                "PASS: Full pipeline survived backpressure."
             );
+
         end
         else begin
+
             $display(
-                "FAIL: Unexpected peak bin."
+                "FAIL: Unexpected peak bin after backpressure."
             );
+
         end
+
 
         repeat (10) @(posedge clk);
 
         $finish;
+
     end
 
 
-    // Use the same FFT settings as the earlier test.
+    // Use the same FFT settings as before.
     task send_fft_configuration;
         begin
+
             @(negedge clk);
 
             fft_config_data = 16'h0557;
             fft_config_valid = 1'b1;
 
+
             while (!fft_config_ready) begin
                 @(negedge clk);
             end
 
+
             @(negedge clk);
 
             fft_config_valid = 1'b0;
+
         end
     endtask
 
 
-    // Send one input sample into the FIR.
+    // Hold valid until the FIR accepts the sample.
     task send_sample(
         input logic signed [15:0] sample_value
     );
         begin
-            @(negedge clk);
 
-            while (!fir_input_ready) begin
-                @(negedge clk);
-            end
+            @(negedge clk);
 
             fir_input_data = sample_value;
             fir_input_valid = 1'b1;
 
+
+            do begin
+                @(posedge clk);
+            end
+            while (!fir_input_ready);
+
+
             @(negedge clk);
 
             fir_input_valid = 1'b0;
+
         end
     endtask
 
