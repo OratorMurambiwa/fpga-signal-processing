@@ -6,15 +6,18 @@ module MagnitudeSquared (
     output logic        [32:0] magnitude_squared
 );
 
-    logic signed [31:0] real_squared;
-    logic signed [31:0] imag_squared;
+    logic [31:0] real_squared;
+    logic [31:0] imag_squared;
 
     always_comb begin
-        real_squared = real_in * real_in;
-        imag_squared = imag_in * imag_in;
+
+        real_squared = $unsigned(real_in * real_in);
+        imag_squared = $unsigned(imag_in * imag_in);
 
         magnitude_squared =
-            real_squared + imag_squared;
+            {1'b0, real_squared}
+            + {1'b0, imag_squared};
+
     end
 
 endmodule
