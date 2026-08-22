@@ -10,6 +10,7 @@ module FullPipelineTestbench;
     // FIR signals.
     logic signed [15:0] fir_input_data;
     logic               fir_input_valid;
+    logic               fir_input_ready;
 
     logic signed [15:0] fir_output_data;
     logic               fir_output_valid;
@@ -48,9 +49,13 @@ module FullPipelineTestbench;
     FirFilter fir_filter (
         .clk(clk),
         .reset(reset),
+
         .input_valid(fir_input_valid),
+        .input_ready(fir_input_ready),
         .input_data(fir_input_data),
+
         .output_valid(fir_output_valid),
+        .output_ready(fft_input_ready),
         .output_data(fir_output_data)
     );
 
@@ -137,21 +142,6 @@ module FullPipelineTestbench;
             else begin
                 fft_input_count <= fft_input_count + 10'd1;
             end
-        end
-    end
-
-
-    // Stop the test if the FFT cannot accept a FIR output.
-    always_ff @(posedge clk) begin
-        if (
-            fir_output_valid
-            && !fft_input_ready
-        ) begin
-            $display(
-                "ERROR: FFT backpressure occurred."
-            );
-
-            $finish;
         end
     end
 
@@ -269,7 +259,7 @@ module FullPipelineTestbench;
         begin
             @(negedge clk);
 
-            while (!fft_input_ready) begin
+            while (!fir_input_ready) begin
                 @(negedge clk);
             end
 
