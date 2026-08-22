@@ -100,7 +100,7 @@ module FftCoreTestbench;
             $finish;
         end
 
-        // Wait for the FFT core to initialize.
+        // Give the FFT core a few clock cycles before configuration.
         repeat (5) begin
             @(posedge aclk);
         end
@@ -129,6 +129,7 @@ module FftCoreTestbench;
 
         $fclose(input_file);
 
+        // Wait until the FFT core marks the final output bin.
         wait (m_axis_data_tlast == 1'b1);
 
         repeat (10) begin
@@ -140,12 +141,13 @@ module FftCoreTestbench;
         $finish;
     end
 
-    // Send FFT configuration before the frame begins.
+    // Configure the core for a forward, scaled FFT.
     task send_configuration;
         begin
             @(negedge aclk);
 
-            s_axis_config_tdata = 16'h02AA;
+            // Forward FFT with a conservative 1024-point scaling schedule.
+            s_axis_config_tdata = 16'h0557;
             s_axis_config_tvalid = 1'b1;
 
             while (!s_axis_config_tready) begin
@@ -158,7 +160,7 @@ module FftCoreTestbench;
         end
     endtask
 
-    // Send one real-valued sample to the FFT.
+    // Send one real-valued input sample using AXI4-Stream handshaking.
     task send_sample(
         input logic signed [15:0] sample_value,
         input logic last_sample
@@ -170,7 +172,10 @@ module FftCoreTestbench;
                 @(negedge aclk);
             end
 
+            // Lower 16 bits = real component.
             s_axis_data_tdata[15:0] = sample_value;
+
+            // Upper 16 bits = imaginary component.
             s_axis_data_tdata[31:16] = 16'sd0;
 
             s_axis_data_tvalid = 1'b1;
