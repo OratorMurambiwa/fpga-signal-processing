@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Sat Aug 22 00:09:05 2026
+# Process ID         : 11128
+# Current directory  : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1
+# Command line       : vivado.exe -log FftCore.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source FftCore.tcl
+# Log file           : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/FftCore.vds
+# Journal file       : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1\vivado.jou
+# Running On         : OratorMurambiwa
+# Platform           : Windows 11
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) Ultra 5 225U
+# CPU Frequency      : 3072 MHz
+# CPU Physical cores : 12
+# CPU Logical cores  : 14
+# Host memory        : 16017 MB
+# Swap memory        : 20401 MB
+# Total Virtual      : 36418 MB
+# Available Virtual  : 16853 MB
+#-----------------------------------------------------------
+source FftCore.tcl -notrace

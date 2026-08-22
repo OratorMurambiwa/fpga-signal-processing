@@ -1,0 +1,5 @@
+vhdl xil_defaultlib  \
+"../../../../fpga_signal_processing.gen/sources_1/ip/FftCore/sim/FftCore.vhd" \
+
+# Do not sort compile order
+nosort

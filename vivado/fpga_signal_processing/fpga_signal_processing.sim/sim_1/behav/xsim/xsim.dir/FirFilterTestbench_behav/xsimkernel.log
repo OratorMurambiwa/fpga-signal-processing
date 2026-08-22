@@ -1,0 +1,7 @@
+Running: xsim.dir/FirFilterTestbench_behav/xsimk.exe -simmode gui -wdb FirFilterTestbench_behav.wdb -simrunnum 0 -socket 53867
+Design successfully loaded
+Design Loading Memory Usage: 19156 KB (Peak: 19156 KB)
+Design Loading CPU Usage: 93 ms
+Simulation completed
+Simulation Memory Usage: 26676 KB (Peak: 26676 KB)
+Simulation CPU Usage: 280 ms

@@ -1,4 +1,4 @@
-// Test the FirFilter module with a short sequence of input samples.
+// Test FirFilter using quantized signal samples from a text file.
 
 `timescale 1ns / 1ps
 
@@ -11,6 +11,11 @@ module FirFilterTestbench;
 
     logic output_valid;
     logic signed [15:0] output_data;
+
+    integer input_file;
+    integer output_file;
+    integer scan_result;
+    integer sample;
 
     // Instantiate the FIR filter being tested.
     FirFilter dut (
@@ -31,36 +36,79 @@ module FirFilterTestbench;
         end
     end
 
-    // Apply reset and send test samples.
+    // Save every valid FIR output sample.
+    always @(negedge clk) begin
+        if (output_valid && output_file != 0) begin
+            $fdisplay(
+                output_file,
+                "%0d",
+                output_data
+            );
+        end
+    end
+
+    // Reset the filter and process input samples.
     initial begin
         reset = 1'b1;
         input_valid = 1'b0;
         input_data = 16'sd0;
 
+        input_file = $fopen(
+            "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
+            "r"
+        );
+
+        output_file = $fopen(
+            "C:/Users/muram/fpga-signal-processing/simulation/data/rtl_filtered_samples.txt",
+            "w"
+        );
+
+        if (input_file == 0) begin
+            $display("Error: Could not open signal_samples.txt");
+            $finish;
+        end
+
+        if (output_file == 0) begin
+            $display("Error: Could not create rtl_filtered_samples.txt");
+            $finish;
+        end
+
         #20;
 
         reset = 1'b0;
 
-        send_sample(16'sd1000);
-        send_sample(16'sd2000);
-        send_sample(16'sd3000);
-        send_sample(16'sd4000);
-        send_sample(16'sd5000);
-        send_sample(16'sd6000);
-        send_sample(16'sd7000);
-        send_sample(16'sd8000);
+        while (!$feof(input_file)) begin
+            scan_result = $fscanf(
+                input_file,
+                "%d\n",
+                sample
+            );
 
-        #50;
+            if (scan_result == 1) begin
+                send_sample(sample);
+            end
+        end
+
+        $fclose(input_file);
+
+        // Wait long enough for the final FIR output to be written.
+        repeat (10) begin
+            @(posedge clk);
+        end
+
+        $fclose(output_file);
 
         $finish;
     end
 
     // Send one valid input sample to the FIR filter.
-    task send_sample(input logic signed [15:0] sample);
+    task send_sample(
+        input logic signed [15:0] sample_value
+    );
         begin
             @(negedge clk);
 
-            input_data = sample;
+            input_data = sample_value;
             input_valid = 1'b1;
 
             @(negedge clk);

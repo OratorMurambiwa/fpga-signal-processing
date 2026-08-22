@@ -1,0 +1,525 @@
+
+*** Running vivado
+    with args -log FftCore.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source FftCore.tcl
+
+
+INFO: [Common 17-3922] A valid Vivado Design Suite BASIC license has been detected. Your current license is active and will expire on 17-aug-2027.
+#-----------------------------------------------------------
+# Vivado v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Sat Aug 22 00:09:05 2026
+# Process ID         : 11128
+# Current directory  : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1
+# Command line       : vivado.exe -log FftCore.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source FftCore.tcl
+# Log file           : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/FftCore.vds
+# Journal file       : C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1\vivado.jou
+# Running On         : OratorMurambiwa
+# Platform           : Windows 11
+# Operating System   : 26200
+# Processor Detail   : Intel(R) Core(TM) Ultra 5 225U
+# CPU Frequency      : 3072 MHz
+# CPU Physical cores : 12
+# CPU Logical cores  : 14
+# Host memory        : 16017 MB
+# Swap memory        : 20401 MB
+# Total Virtual      : 36418 MB
+# Available Virtual  : 16853 MB
+#-----------------------------------------------------------
+
+****** Vivado v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Sat Aug 22 00:09:05 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source FftCore.tcl -notrace
+create_project: Time (s): cpu = 00:00:22 ; elapsed = 00:00:15 . Memory (MB): peak = 579.836 ; gain = 267.324
+Command: synth_design -top FftCore -part xc7s6ftgb196-1 -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Vivado_Synthesis' and/or device 'xc7s6'
+INFO: [Common 17-349] Got license for feature 'Vivado_Synthesis' and/or device 'xc7s6'
+INFO: [Device 21-403] Loading part xc7s6ftgb196-1
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 12156
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1312.191 ; gain = 576.281
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'FftCore' [c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/synth/FftCore.vhd:82]
+	Parameter C_XDEVICEFAMILY bound to: spartan7 - type: string 
+	Parameter C_PART bound to: no_part - type: string 
+	Parameter C_S_AXIS_CONFIG_TDATA_WIDTH bound to: 16 - type: integer 
+	Parameter C_S_AXIS_DATA_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_M_AXIS_DATA_TDATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_M_AXIS_DATA_TUSER_WIDTH bound to: 1 - type: integer 
+	Parameter C_M_AXIS_STATUS_TDATA_WIDTH bound to: 1 - type: integer 
+	Parameter C_THROTTLE_SCHEME bound to: 1 - type: integer 
+	Parameter C_NSSR bound to: 1 - type: integer 
+	Parameter C_CHANNELS bound to: 1 - type: integer 
+	Parameter C_NFFT_MAX bound to: 10 - type: integer 
+	Parameter C_ARCH bound to: 3 - type: integer 
+	Parameter C_HAS_NFFT bound to: 0 - type: integer 
+	Parameter C_USE_FLT_PT bound to: 0 - type: integer 
+	Parameter C_INPUT_WIDTH bound to: 16 - type: integer 
+	Parameter C_TWIDDLE_WIDTH bound to: 16 - type: integer 
+	Parameter C_OUTPUT_WIDTH bound to: 16 - type: integer 
+	Parameter C_HAS_SCALING bound to: 1 - type: integer 
+	Parameter C_HAS_BFP bound to: 0 - type: integer 
+	Parameter C_HAS_ROUNDING bound to: 0 - type: integer 
+	Parameter C_HAS_ACLKEN bound to: 0 - type: integer 
+	Parameter C_HAS_ARESETN bound to: 0 - type: integer 
+	Parameter C_HAS_OVFLO bound to: 0 - type: integer 
+	Parameter C_HAS_NATURAL_INPUT bound to: 1 - type: integer 
+	Parameter C_HAS_NATURAL_OUTPUT bound to: 1 - type: integer 
+	Parameter C_HAS_CYCLIC_PREFIX bound to: 0 - type: integer 
+	Parameter C_HAS_XK_INDEX bound to: 0 - type: integer 
+	Parameter C_DATA_MEM_TYPE bound to: 1 - type: integer 
+	Parameter C_TWIDDLE_MEM_TYPE bound to: 1 - type: integer 
+	Parameter C_BRAM_STAGES bound to: 3 - type: integer 
+	Parameter C_REORDER_MEM_TYPE bound to: 1 - type: integer 
+	Parameter C_USE_HYBRID_RAM bound to: 0 - type: integer 
+	Parameter C_OPTIMIZE_GOAL bound to: 0 - type: integer 
+	Parameter C_CMPY_TYPE bound to: 1 - type: integer 
+	Parameter C_BFLY_TYPE bound to: 0 - type: integer 
+	Parameter C_SYSTOLICFFT_INV bound to: 0 - type: integer 
+	Parameter C_IS_BLOCKING_RUNTIME_CONF bound to: 0 - type: integer 
+INFO: [Synth 8-3491] module 'xfft_v9_1_16' declared at 'c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/hdl/xfft_v9_1_vh_rfs.vhd:103894' bound to instance 'U0' of component 'xfft_v9_1_16' [c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/synth/FftCore.vhd:202]
+INFO: [Synth 8-256] done synthesizing module 'FftCore' (0#1) [c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/synth/FftCore.vhd:82]
+INFO: [Synth 8-7129] Port Q[0] in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port CLK in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port CE in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port SCLR in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized82 is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[3] in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[2] in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[1] in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[0] in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port aclr in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port aset in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port ainit in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port sclr in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port sset in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port sinit in module c_shift_ram_v12_0_21_legacy__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized84 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized84 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[15] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[14] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[13] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[12] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[11] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[10] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[9] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[8] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[7] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[6] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[5] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[4] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[3] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[2] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[1] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized83 is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[3] in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[2] in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[1] in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port a[0] in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port aclr in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port aset in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port ainit in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port sclr in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port sset in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port sinit in module c_shift_ram_v12_0_21_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized81 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized81 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D1 in module shift_ram__parameterized80 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized80 is either unconnected or has no load
+INFO: [Synth 8-7129] Port depthx2 in module r22_memory__parameterized4 is either unconnected or has no load
+INFO: [Synth 8-7129] Port Q1 in module shift_ram__parameterized79 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D1 in module shift_ram__parameterized79 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized79 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized79 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D1 in module shift_ram__parameterized76 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized76 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized22 is either unconnected or has no load
+INFO: [Synth 8-7129] Port SCLR in module shift_ram__parameterized22 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized22 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized22 is either unconnected or has no load
+INFO: [Synth 8-7129] Port Q1 in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D1 in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port CLK in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port CE in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port SCLR in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized78 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D1 in module shift_ram__parameterized77 is either unconnected or has no load
+INFO: [Synth 8-7129] Port SCLR in module shift_ram__parameterized77 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized77 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized77 is either unconnected or has no load
+INFO: [Synth 8-7129] Port D[0] in module shift_ram__parameterized42 is either unconnected or has no load
+INFO: [Synth 8-7129] Port COMBI_SCLR in module shift_ram__parameterized42 is either unconnected or has no load
+INFO: [Synth 8-7129] Port DEPTHx2 in module shift_ram__parameterized42 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MUXCY_IN in module equ_rtl is either unconnected or has no load
+INFO: [Synth 8-7129] Port AINIT in module c_reg_fd_v12_0_12_viv is either unconnected or has no load
+INFO: [Synth 8-7129] Port ACLR in module c_reg_fd_v12_0_12_viv is either unconnected or has no load
+INFO: [Synth 8-7129] Port ASET in module c_reg_fd_v12_0_12_viv is either unconnected or has no load
+INFO: [Synth 8-7129] Port SINIT in module c_reg_fd_v12_0_12_viv is either unconnected or has no load
+INFO: [Synth 8-7129] Port SSET in module c_reg_fd_v12_0_12_viv is either unconnected or has no load
+INFO: [Synth 8-7129] Port add in module c_addsub_v12_0_22_lut6_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port bypass in module c_addsub_v12_0_22_lut6_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port sset in module c_addsub_v12_0_22_lut6_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port sinit in module c_addsub_v12_0_22_lut6_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port b_in in module c_addsub_v12_0_22_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port a_signed in module c_addsub_v12_0_22_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port b_signed in module c_addsub_v12_0_22_legacy is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[9] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[8] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[7] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[6] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[5] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[4] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[3] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[2] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[1] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port MAX[0] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port LOAD[9] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Synth 8-7129] Port LOAD[8] in module cnt_tc_rtl_a__parameterized0 is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:02:50 ; elapsed = 00:03:13 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:50 ; elapsed = 00:03:13 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:02:50 ; elapsed = 00:03:13 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.215 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2095 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+Parsing XDC File [c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/FftCore_ooc.xdc] for cell 'U0'
+Finished Parsing XDC File [c:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.gen/sources_1/ip/FftCore/FftCore_ooc.xdc] for cell 'U0'
+Parsing XDC File [C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/dont_touch.xdc]
+Finished Parsing XDC File [C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/dont_touch.xdc]
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.049 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 272 instances were transformed.
+  FD => FDRE: 5 instances
+  FDE => FDRE: 226 instances
+  FDR => FDRE: 39 instances
+  RAMB18 => RAMB18E1: 2 instances
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.981 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:03:20 ; elapsed = 00:03:44 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7s6ftgb196-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:03:20 ; elapsed = 00:03:44 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:03:20 ; elapsed = 00:03:44 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:03:28 ; elapsed = 00:03:54 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 10 (col length:20)
+BRAMs: 10 (col length: RAMB18 20 RAMB36 10)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[4].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[4].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/has_scale_pipelining.pe_ovflo_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.runt_srl_loop.i_fdre) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[4].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[4].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[26].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[25].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[24].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[7].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[6].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[5].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[4].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[3].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[2].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[1].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[0].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[26].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[25].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[24].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[7].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[6].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[5].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[4].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[3].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[2].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[1].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[0].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[0].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[3].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_addr_gen.next_bf1_addr_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[3].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/has_scale_pipelining.pe_ovflo_delay/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.runt_srl_loop.i_fdre) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[3].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[3].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/hasbf2.FB_2.BF_2/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[26].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[25].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[24].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[7].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[6].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[5].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[4].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[3].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[2].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[1].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[0].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[26].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[25].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[24].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[7].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[6].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[5].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[4].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[3].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[2].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[1].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[1].natural_order_input.PE/scaling2bits.scaler_im/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[0].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_bf2/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/delay_addr_tw/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[2].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/FB_1.BF_1/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/FB_1.BF_1/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[0].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/FB_1.BF_1/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre0) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/FB_1.BF_1/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.srl_loop[1].i_fdre1) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/FB_1.BF_1/wr_addr_del/no_sclr_lut.real_shift_ram.use_baseblock.use_hlutnm_srls.runt_srl_loop.i_fdre) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[26].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[25].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[24].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[7].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[6].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[5].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[4].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Synth 8-3332] Sequential element (non_native_flt_non_ssr_fft.xfft_inst/non_floating_point.arch_d.xfft_inst/pe_gen[2].natural_order_input.PE/scaling2bits.scaler_re/scale_mux/four_inputs.use_lut6.no_lut_sclr.four_to_one_mux[3].latency1.reg) is unused and will be removed from module xfft_v9_1_16_viv.
+INFO: [Common 17-14] Message 'Synth 8-3332' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:03:38 ; elapsed = 00:04:04 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-3323] Resources of type DSP have been overutilized. Used = 12, Available = 10. Use report_utilization command for details.
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:03:58 ; elapsed = 00:04:26 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:04:01 ; elapsed = 00:04:28 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:04:04 ; elapsed = 00:04:32 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:04:10 ; elapsed = 00:04:38 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:04:10 ; elapsed = 00:04:38 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:04:12 ; elapsed = 00:04:40 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:04:12 ; elapsed = 00:04:40 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:04:12 ; elapsed = 00:04:40 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:04:12 ; elapsed = 00:04:40 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------------------+--------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name             | DSP Mapping              | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------------------+--------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|dsp_307                 | (C'-(((D'+A'')'*B'')'))' | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized0_306 | (C+((D'+A')'*B'')')'     | 25     | 18     | 9      | 25     | 43     | 1    | 2    | 0    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized1_304 | (C'+((D'-A'')'*B'')')'   | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp_205                 | (C'-(((D'+A'')'*B'')'))' | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized0_204 | (C+((D'+A')'*B'')')'     | 25     | 18     | 9      | 25     | 43     | 1    | 2    | 0    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized1_202 | (C'+((D'-A'')'*B'')')'   | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp_132                 | (C'-(((D'+A'')'*B'')'))' | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized0_131 | (C+((D'+A')'*B'')')'     | 25     | 18     | 9      | 25     | 43     | 1    | 2    | 0    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized1_129 | (C'+((D'-A'')'*B'')')'   | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp                     | (C'-(((D'+A'')'*B'')'))' | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized0     | (C+((D'+A')'*B'')')'     | 25     | 18     | 9      | 25     | 43     | 1    | 2    | 0    | 1    | 1     | 1    | 1    | 
+|dsp__parameterized1     | (C'+((D'-A'')'*B'')')'   | 25     | 18     | 48     | 25     | 43     | 2    | 2    | 1    | 1    | 1     | 1    | 1    | 
++------------------------+--------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |CARRY4   |    38|
+|2     |DSP48E1  |    12|
+|4     |LUT1     |    25|
+|5     |LUT2     |   566|
+|6     |LUT3     |  1160|
+|7     |LUT4     |   232|
+|8     |LUT5     |    37|
+|9     |LUT6     |   291|
+|10    |MUXCY    |   916|
+|11    |RAM64X1S |    31|
+|12    |RAMB18   |     2|
+|13    |RAMB18E1 |     4|
+|15    |SRL16E   |   826|
+|16    |SRLC32E  |   130|
+|17    |XORCY    |   882|
+|18    |FD       |     5|
+|19    |FDE      |   216|
+|20    |FDR      |    28|
+|21    |FDRE     |  4139|
++------+---------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:04:12 ; elapsed = 00:04:40 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 1 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:01:10 ; elapsed = 00:04:28 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+Synthesis Optimization Complete : Time (s): cpu = 00:04:13 ; elapsed = 00:04:41 . Memory (MB): peak = 3044.188 ; gain = 2308.277
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.113 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 2134 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 563 instances were transformed.
+  (MUXCY,XORCY) => CARRY4: 281 instances
+  FD => FDRE: 5 instances
+  FDE => FDRE: 216 instances
+  FDR => FDRE: 28 instances
+  RAM64X1S => RAM64X1S (RAMS64E): 31 instances
+  RAMB18 => RAMB18E1: 2 instances
+
+Synth Design complete | Checksum: de9d0fe5
+INFO: [Common 17-83] Releasing license: Vivado_Synthesis
+223 Infos, 1 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:04:24 ; elapsed = 00:04:54 . Memory (MB): peak = 3044.188 ; gain = 2452.984
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.088 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/FftCore.dcp' has been generated.
+INFO: [Ipptcl 7-1612] Added synthesis output to IP cache for IP FftCore, cache-ID = 6e8f092bd687908c
+INFO: [Coretcl 2-1174] Renamed 727 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.037 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.runs/FftCore_synth_1/FftCore.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file FftCore_utilization_synth.rpt -pb FftCore_utilization_synth.pb
+write_vhdl: Time (s): cpu = 00:00:08 ; elapsed = 00:00:08 . Memory (MB): peak = 3044.188 ; gain = 0.000
+INFO: [Common 17-206] Exiting Vivado at Sat Aug 22 00:14:37 2026...

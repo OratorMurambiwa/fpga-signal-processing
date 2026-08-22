@@ -1,0 +1,1 @@
+FftCore.vhd,vhdl,xil_defaultlib,../../../../fpga_signal_processing.gen/sources_1/ip/FftCore/sim/FftCore.vhd,incdir="../../../../../../../../../AMDDesignTools/2026.1/Vivado/data/rsb/busdef"
