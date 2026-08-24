@@ -37,11 +37,11 @@ module FrequencyAnalysisPipeline (
     assign fft_imag = fft_data[31:16];
 
 
-    // This stage can currently accept one FFT sample every clock.
+    // This stage can accept one FFT sample every clock.
     assign fft_ready = 1'b1;
 
 
-    // Calculate the strength of the complex FFT sample.
+    // Calculate the magnitude squared of the FFT sample.
     MagnitudeSquared magnitude_squared_unit (
         .real_in(fft_real),
         .imag_in(fft_imag),
@@ -74,10 +74,14 @@ module FrequencyAnalysisPipeline (
         else if (fft_valid && fft_ready) begin
 
             if (fft_last) begin
+
                 bin_index <= 10'd0;
+
             end
             else begin
+
                 bin_index <= bin_index + 10'd1;
+
             end
 
         end
@@ -85,7 +89,7 @@ module FrequencyAnalysisPipeline (
     end
 
 
-    // Find the strongest FFT bin above the configured threshold.
+    // Find the strongest FFT bin above the threshold.
     PeakDetector peak_detector (
         .clk(clk),
         .reset(reset),
