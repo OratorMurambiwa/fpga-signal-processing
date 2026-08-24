@@ -1,18 +1,20 @@
-// Test the peak detector across multiple frames.
+// Test the peak detector and configurable threshold.
 
 `timescale 1ns / 1ps
 
 module PeakDetectorTestbench;
 
-    logic clk;
-    logic reset;
+    logic        clk;
+    logic        reset;
 
     logic        input_valid;
     logic [32:0] magnitude_in;
     logic [9:0]  bin_index;
 
-    logic frame_start;
-    logic frame_end;
+    logic        frame_start;
+    logic        frame_end;
+
+    logic [31:0] threshold;
 
     logic        peak_valid;
     logic [9:0]  peak_bin;
@@ -29,6 +31,8 @@ module PeakDetectorTestbench;
 
         .frame_start(frame_start),
         .frame_end(frame_end),
+
+        .threshold(threshold),
 
         .peak_valid(peak_valid),
         .peak_bin(peak_bin),
@@ -57,26 +61,46 @@ module PeakDetectorTestbench;
         frame_start = 1'b0;
         frame_end = 1'b0;
 
+        threshold = 32'd0;
+
 
         repeat (3) @(posedge clk);
 
+        @(negedge clk);
         reset = 1'b0;
 
 
-        // First frame:
-        // 100, 500, 200, 900, 300
-        // Expected peak = 900 at bin 3.
+        // Frame 1.
+        send_sample(
+            33'd100,
+            10'd0,
+            1'b1,
+            1'b0
+        );
 
-        send_sample(33'd100, 10'd0, 1'b1, 1'b0);
-        send_sample(33'd500, 10'd1, 1'b0, 1'b0);
-        send_sample(33'd200, 10'd2, 1'b0, 1'b0);
-        send_sample(33'd900, 10'd3, 1'b0, 1'b0);
-        send_sample(33'd300, 10'd4, 1'b0, 1'b1);
+        send_sample(
+            33'd500,
+            10'd1,
+            1'b0,
+            1'b0
+        );
+
+        send_sample(
+            33'd300,
+            10'd2,
+            1'b0,
+            1'b0
+        );
+
+        send_sample(
+            33'd900,
+            10'd3,
+            1'b0,
+            1'b1
+        );
 
 
-        wait (peak_valid);
-
-        @(negedge clk);
+        wait (peak_valid == 1'b1);
 
         $display(
             "Frame 1 peak magnitude = %0d, bin = %0d",
@@ -84,29 +108,49 @@ module PeakDetectorTestbench;
             peak_bin
         );
 
+
         if (
             peak_magnitude == 33'd900
             && peak_bin == 10'd3
         ) begin
+
             $display("PASS: Frame 1");
+
         end
         else begin
+
             $display("FAIL: Frame 1");
+
         end
 
 
-        // Second frame:
-        // 40, 80, 20
-        // Expected peak = 80 at bin 1.
-
-        send_sample(33'd40, 10'd0, 1'b1, 1'b0);
-        send_sample(33'd80, 10'd1, 1'b0, 1'b0);
-        send_sample(33'd20, 10'd2, 1'b0, 1'b1);
+        @(posedge clk);
 
 
-        wait (peak_valid);
+        // Frame 2.
+        send_sample(
+            33'd40,
+            10'd0,
+            1'b1,
+            1'b0
+        );
 
-        @(negedge clk);
+        send_sample(
+            33'd80,
+            10'd1,
+            1'b0,
+            1'b0
+        );
+
+        send_sample(
+            33'd60,
+            10'd2,
+            1'b0,
+            1'b1
+        );
+
+
+        wait (peak_valid == 1'b1);
 
         $display(
             "Frame 2 peak magnitude = %0d, bin = %0d",
@@ -114,37 +158,144 @@ module PeakDetectorTestbench;
             peak_bin
         );
 
+
         if (
             peak_magnitude == 33'd80
             && peak_bin == 10'd1
         ) begin
+
             $display("PASS: Frame 2");
+
         end
         else begin
+
             $display("FAIL: Frame 2");
+
         end
 
+
+        @(posedge clk);
+
+
+        // Threshold below the peak.
+        threshold = 32'd500;
+
+
+        send_sample(
+            33'd200,
+            10'd0,
+            1'b1,
+            1'b0
+        );
+
+        send_sample(
+            33'd700,
+            10'd1,
+            1'b0,
+            1'b0
+        );
+
+        send_sample(
+            33'd400,
+            10'd2,
+            1'b0,
+            1'b1
+        );
+
+
+        wait (peak_valid == 1'b1);
+
+        if (
+            peak_magnitude == 33'd700
+            && peak_bin == 10'd1
+        ) begin
+
+            $display(
+                "PASS: Peak above threshold was detected."
+            );
+
+        end
+        else begin
+
+            $display(
+                "FAIL: Peak above threshold was incorrect."
+            );
+
+        end
+
+
+        @(posedge clk);
+
+
+        // Threshold above the peak.
+        threshold = 32'd1000;
+
+
+        send_sample(
+            33'd200,
+            10'd0,
+            1'b1,
+            1'b0
+        );
+
+        send_sample(
+            33'd700,
+            10'd1,
+            1'b0,
+            1'b0
+        );
+
+        send_sample(
+            33'd400,
+            10'd2,
+            1'b0,
+            1'b1
+        );
+
+
+        // Peak should not be reported.
+        repeat (3) @(posedge clk);
+
+
+        if (!peak_valid) begin
+
+            $display(
+                "PASS: Peak below threshold was rejected."
+            );
+
+        end
+        else begin
+
+            $display(
+                "FAIL: Peak below threshold was detected."
+            );
+
+        end
+
+
+        repeat (5) @(posedge clk);
 
         $finish;
 
     end
 
 
+    // Send one magnitude sample.
     task send_sample(
-        input logic [32:0] sample_magnitude,
-        input logic [9:0]  sample_bin,
-        input logic        sample_start,
-        input logic        sample_end
+        input logic [32:0] magnitude,
+        input logic [9:0]  bin,
+        input logic        start_frame,
+        input logic        end_frame
     );
         begin
 
             @(negedge clk);
 
-            magnitude_in = sample_magnitude;
-            bin_index = sample_bin;
+            magnitude_in = magnitude;
+            bin_index = bin;
 
-            frame_start = sample_start;
-            frame_end = sample_end;
+            frame_start = start_frame;
+            frame_end = end_frame;
 
             input_valid = 1'b1;
 
