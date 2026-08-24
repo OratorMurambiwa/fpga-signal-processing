@@ -1,38 +1,100 @@
-if {$argc < 1} {
-    puts "ERROR: No testbench name provided."
-    exit 1
-}
+@echo off
+setlocal EnableDelayedExpansion
 
-set testbench [lindex $argv 0]
+set "VIVADO=C:\AMDDesignTools\2026.1\Vivado\bin\vivado.bat"
+set "SCRIPT=C:\Users\muram\fpga-signal-processing\scripts\RunOneTest.tcl"
+set "RESULTS=C:\Users\muram\fpga-signal-processing\results\verification"
 
-set project_file "C:/Users/muram/fpga-signal-processing/vivado/fpga_signal_processing/fpga_signal_processing.xpr"
+if not exist "%RESULTS%" mkdir "%RESULTS%"
 
-puts "Running $testbench"
+set PASSED=0
+set FAILED=0
+set INFRA_FAILED=0
 
-open_project $project_file
+echo Running FPGA verification tests
 
-set_property top $testbench [get_filesets sim_1]
-set_property top_lib xil_defaultlib [get_filesets sim_1]
+for %%T in (
+    FirFilterTestbench
+    MagnitudeSquaredTestbench
+    PeakDetectorTestbench
+    FftCoreTestbench
+    FrequencyAnalysisPipelineTestbench
+    AxiLiteControlTestbench
+    FullPipelineTestbench
+) do (
+    echo Running %%T
 
-update_compile_order -fileset sim_1
+    set "LOG=%RESULTS%\%%T.log"
 
-if {[catch {
-    launch_simulation -mode behavioral
-} result]} {
-    puts "ERROR: Could not launch $testbench"
-    puts $result
+    "%VIVADO%" -mode batch -source "%SCRIPT%" -tclargs %%T -log "!LOG!" -journal "%RESULTS%\%%T.jou"
 
-    catch {close_sim}
-    close_project
+    set "RETURN_CODE=!ERRORLEVEL!"
 
-    exit 2
-}
+    if not "!RETURN_CODE!"=="0" (
+        echo %%T: INFRA ERROR
+        set /a INFRA_FAILED+=1
+    ) else (
+        findstr /C:"FAIL:" "!LOG!" >nul
 
-catch {run all}
+        if !ERRORLEVEL! EQU 0 (
+            echo %%T: FAIL
+            set /a FAILED+=1
+        ) else (
+            findstr /C:"TEST_COMPLETED: %%T" "!LOG!" >nul
 
-puts "TEST_COMPLETED: $testbench"
+            if !ERRORLEVEL! EQU 0 (
+                echo %%T: PASS
+                set /a PASSED+=1
+            ) else (
+                echo %%T: INFRA ERROR
+                set /a INFRA_FAILED+=1
+            )
+        )
+    )
+)
 
-catch {close_sim}
-close_project
+set /a TOTAL=PASSED+FAILED+INFRA_FAILED
 
-exit 0
+echo.
+echo Test Summary
+
+for %%T in (
+    FirFilterTestbench
+    MagnitudeSquaredTestbench
+    PeakDetectorTestbench
+    FftCoreTestbench
+    FrequencyAnalysisPipelineTestbench
+    AxiLiteControlTestbench
+    FullPipelineTestbench
+) do (
+    set "LOG=%RESULTS%\%%T.log"
+
+    findstr /C:"TEST_COMPLETED: %%T" "!LOG!" >nul 2>&1
+
+    if !ERRORLEVEL! EQU 0 (
+        findstr /C:"FAIL:" "!LOG!" >nul 2>&1
+
+        if !ERRORLEVEL! EQU 0 (
+            echo %%T: FAIL
+        ) else (
+            echo %%T: PASS
+        )
+    ) else (
+        echo %%T: INFRA ERROR
+    )
+)
+
+echo.
+echo Passed: %PASSED%
+echo Failed: %FAILED%
+echo Infra errors: %INFRA_FAILED%
+echo Total: %TOTAL%
+
+if %FAILED% EQU 0 if %INFRA_FAILED% EQU 0 (
+    echo All tests passed
+) else (
+    echo Some tests did not pass
+)
+
+pause
+endlocal
