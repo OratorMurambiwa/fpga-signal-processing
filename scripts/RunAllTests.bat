@@ -25,8 +25,9 @@ for %%T in (
     echo Running %%T
 
     set "LOG=%RESULTS%\%%T.log"
+    set "JOURNAL=%RESULTS%\%%T.jou"
 
-    "%VIVADO%" -mode batch -source "%SCRIPT%" -tclargs %%T -log "!LOG!" -journal "%RESULTS%\%%T.jou"
+    "%VIVADO%" -mode batch -log "!LOG!" -journal "!JOURNAL!" -source "%SCRIPT%" -tclargs %%T
 
     set "RETURN_CODE=!ERRORLEVEL!"
 
@@ -34,13 +35,13 @@ for %%T in (
         echo %%T: INFRA ERROR
         set /a INFRA_FAILED+=1
     ) else (
-        findstr /C:"FAIL:" "!LOG!" >nul
+        findstr /C:"FAIL:" "!LOG!" >nul 2>&1
 
         if !ERRORLEVEL! EQU 0 (
             echo %%T: FAIL
             set /a FAILED+=1
         ) else (
-            findstr /C:"TEST_COMPLETED: %%T" "!LOG!" >nul
+            findstr /C:"TEST_COMPLETED: %%T" "!LOG!" >nul 2>&1
 
             if !ERRORLEVEL! EQU 0 (
                 echo %%T: PASS
