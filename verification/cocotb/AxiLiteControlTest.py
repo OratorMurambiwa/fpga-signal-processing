@@ -8,7 +8,6 @@ async def reset_dut(dut):
 
     dut.reset.value = 1
 
-    # Clear the AXI-Lite inputs during reset.
     dut.s_axi_awaddr.value = 0
     dut.s_axi_awvalid.value = 0
     dut.s_axi_wdata.value = 0
@@ -27,9 +26,8 @@ async def reset_dut(dut):
 
 @cocotb.test()
 async def test_normal_write_and_read(dut):
-    """Write and read the threshold register through AXI-Lite."""
+    """Write and read the threshold register."""
 
-    # Run a 100 MHz clock.
     cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
 
     await reset_dut(dut)
@@ -48,8 +46,7 @@ async def test_normal_write_and_read(dut):
 
     await RisingEdge(dut.clk)
 
-    # Check that the threshold register was updated.
-    assert dut.threshold.value.integer == 5000
+    assert dut.threshold.value.to_unsigned() == 5000
 
     # Read register address 0.
     dut.s_axi_araddr.value = 0
@@ -62,5 +59,120 @@ async def test_normal_write_and_read(dut):
 
     await RisingEdge(dut.clk)
 
-    # Check that AXI-Lite returned the stored value.
-    assert dut.s_axi_rdata.value.integer == 5000
+    assert dut.s_axi_rdata.value.to_unsigned() == 5000
+
+
+@cocotb.test()
+async def test_address_before_data(dut):
+    """Send the write address before the write data."""
+
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    await reset_dut(dut)
+
+    # Send the address first.
+    dut.s_axi_awaddr.value = 0
+    dut.s_axi_awvalid.value = 1
+
+    await RisingEdge(dut.clk)
+    await RisingEdge(dut.clk)
+
+    # Send the data two cycles later.
+    dut.s_axi_wdata.value = 7000
+    dut.s_axi_wvalid.value = 1
+    dut.s_axi_bready.value = 1
+
+    await RisingEdge(dut.clk)
+
+    dut.s_axi_awvalid.value = 0
+    dut.s_axi_wvalid.value = 0
+
+    await RisingEdge(dut.clk)
+
+    assert dut.threshold.value.to_unsigned() == 7000
+
+
+@cocotb.test()
+async def test_data_before_address(dut):
+    """Send the write data before the write address."""
+
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    await reset_dut(dut)
+
+    # Send the data first.
+    dut.s_axi_wdata.value = 9000
+    dut.s_axi_wvalid.value = 1
+
+    await RisingEdge(dut.clk)
+    await RisingEdge(dut.clk)
+
+    # Send the address two cycles later.
+    dut.s_axi_awaddr.value = 0
+    dut.s_axi_awvalid.value = 1
+    dut.s_axi_bready.value = 1
+
+    await RisingEdge(dut.clk)
+
+    dut.s_axi_awvalid.value = 0
+    dut.s_axi_wvalid.value = 0
+
+    await RisingEdge(dut.clk)
+
+    assert dut.threshold.value.to_unsigned() == 9000
+
+
+@cocotb.test()
+async def test_reset_clears_threshold(dut):
+    """Check that reset clears the threshold register."""
+
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    await reset_dut(dut)
+
+    # Write a nonzero threshold.
+    dut.s_axi_awaddr.value = 0
+    dut.s_axi_awvalid.value = 1
+    dut.s_axi_wdata.value = 12000
+    dut.s_axi_wvalid.value = 1
+    dut.s_axi_bready.value = 1
+
+    await RisingEdge(dut.clk)
+
+    dut.s_axi_awvalid.value = 0
+    dut.s_axi_wvalid.value = 0
+
+    await RisingEdge(dut.clk)
+
+    assert dut.threshold.value.to_unsigned() == 12000
+
+    # Reset the module again.
+    dut.reset.value = 1
+    await RisingEdge(dut.clk)
+
+    dut.reset.value = 0
+    await RisingEdge(dut.clk)
+
+    assert dut.threshold.value.to_unsigned() == 0
+
+
+@cocotb.test()
+async def test_invalid_read_address(dut):
+    """Check that an unused address returns zero."""
+
+    cocotb.start_soon(Clock(dut.clk, 10, unit="ns").start())
+
+    await reset_dut(dut)
+
+    # Read from an unused register address.
+    dut.s_axi_araddr.value = 4
+    dut.s_axi_arvalid.value = 1
+    dut.s_axi_rready.value = 1
+
+    await RisingEdge(dut.clk)
+
+    dut.s_axi_arvalid.value = 0
+
+    await RisingEdge(dut.clk)
+
+    assert dut.s_axi_rdata.value.to_unsigned() == 0
