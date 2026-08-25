@@ -97,5 +97,8 @@ if %FAILED% EQU 0 if %INFRA_FAILED% EQU 0 (
     echo Some tests did not pass
 )
 
-pause
+echo.
+echo Press any key to close this window.
+pause >nul
+
 endlocal
