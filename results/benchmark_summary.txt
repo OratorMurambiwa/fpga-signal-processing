@@ -1,0 +1,45 @@
+FPGA Signal Processing Accelerator Benchmark Summary
+
+Target device:
+Spartan-7 xc7s6ftgb196-1
+
+Clock:
+100 MHz
+
+FFT configuration:
+1024-point
+Radix-2 Lite Burst I/O
+Fixed-point
+Scaled
+Natural-order output
+
+Functional result:
+Detected dominant frequency at FFT bin 51
+Peak magnitude: 8779093
+
+End-to-end performance:
+Frame size: 1024 samples
+Frame processing cycles: 13347
+Frame processing time: 133470 ns
+Effective sample throughput: approximately 7.67 MSamples/s
+Frame throughput: approximately 7.49 kframes/s
+
+FFT timing:
+FFT input cycles: 2047
+FFT compute latency: 10274 cycles
+FFT output cycles: 1024
+FFT total input-to-last-output: 13344 cycles
+
+Post-route utilization:
+Slice LUTs: 571 / 3750
+Slice registers: 1156 / 7500
+BRAM tiles: 1.5 / 5
+DSP blocks: 9 / 10
+
+Post-route timing at 100 MHz:
+Worst setup slack: +0.336 ns
+Total negative setup slack: 0.000 ns
+Worst hold slack: +0.046 ns
+Total negative hold slack: 0.000 ns
+
+Timing constraints met at 100 MHz.
