@@ -64,17 +64,29 @@ module FullPipelineTestbench;
     logic [9:0]  peak_bin;
     logic [32:0] peak_magnitude;
 
+    logic [9:0] fft_input_count;
+    logic       fft_output_started;
+
     integer input_file;
     integer scan_result;
     integer sample;
     integer input_count;
 
     integer cycle_count;
+
     integer frame_start_cycle;
     integer frame_end_cycle;
     integer frame_cycles;
 
-    logic [9:0] fft_input_count;
+    integer fft_first_input_cycle;
+    integer fft_last_input_cycle;
+    integer fft_first_output_cycle;
+    integer fft_last_output_cycle;
+
+    integer fft_input_cycles;
+    integer fft_compute_latency;
+    integer fft_output_cycles;
+    integer fft_total_cycles;
 
     AxiLiteControl axi_lite_control (
         .clk(clk),
@@ -216,6 +228,46 @@ module FullPipelineTestbench;
         end
     end
 
+    // Record the first and last accepted FFT input samples.
+    always_ff @(posedge clk) begin
+        if (!reset && fft_input_valid && fft_input_ready) begin
+            if (fft_input_count == 10'd0) begin
+                fft_first_input_cycle <= cycle_count;
+            end
+
+            if (fft_input_count == 10'd1023) begin
+                fft_last_input_cycle <= cycle_count;
+            end
+        end
+    end
+
+    // Track when FFT output begins.
+    always_ff @(posedge clk) begin
+        if (reset) begin
+            fft_output_started <= 1'b0;
+        end
+        else if (
+            fft_output_valid
+            && fft_output_ready
+            && !fft_output_started
+        ) begin
+            fft_output_started <= 1'b1;
+        end
+    end
+
+    // Record the first and last FFT output samples.
+    always_ff @(posedge clk) begin
+        if (!reset && fft_output_valid && fft_output_ready) begin
+            if (!fft_output_started) begin
+                fft_first_output_cycle <= cycle_count;
+            end
+
+            if (fft_output_last) begin
+                fft_last_output_cycle <= cycle_count;
+            end
+        end
+    end
+
     initial begin
         reset = 1'b1;
 
@@ -243,6 +295,16 @@ module FullPipelineTestbench;
         frame_start_cycle = 0;
         frame_end_cycle = 0;
         frame_cycles = 0;
+
+        fft_first_input_cycle = 0;
+        fft_last_input_cycle = 0;
+        fft_first_output_cycle = 0;
+        fft_last_output_cycle = 0;
+
+        fft_input_cycles = 0;
+        fft_compute_latency = 0;
+        fft_output_cycles = 0;
+        fft_total_cycles = 0;
 
         input_file = $fopen(
             "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
@@ -334,6 +396,25 @@ module FullPipelineTestbench;
         frame_cycles =
             frame_end_cycle - frame_start_cycle;
 
+        fft_input_cycles =
+            fft_last_input_cycle
+            - fft_first_input_cycle
+            + 1;
+
+        fft_compute_latency =
+            fft_first_output_cycle
+            - fft_last_input_cycle;
+
+        fft_output_cycles =
+            fft_last_output_cycle
+            - fft_first_output_cycle
+            + 1;
+
+        fft_total_cycles =
+            fft_last_output_cycle
+            - fft_first_input_cycle
+            + 1;
+
         $display(
             "Frame processing cycles = %0d",
             frame_cycles
@@ -342,6 +423,26 @@ module FullPipelineTestbench;
         $display(
             "Frame processing time = %0d ns",
             frame_cycles * 10
+        );
+
+        $display(
+            "FFT input cycles = %0d",
+            fft_input_cycles
+        );
+
+        $display(
+            "FFT compute latency = %0d cycles",
+            fft_compute_latency
+        );
+
+        $display(
+            "FFT output cycles = %0d",
+            fft_output_cycles
+        );
+
+        $display(
+            "FFT total input-to-last-output = %0d cycles",
+            fft_total_cycles
         );
 
         @(negedge clk);
