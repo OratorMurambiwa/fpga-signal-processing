@@ -69,6 +69,11 @@ module FullPipelineTestbench;
     integer sample;
     integer input_count;
 
+    integer cycle_count;
+    integer frame_start_cycle;
+    integer frame_end_cycle;
+    integer frame_cycles;
+
     logic [9:0] fft_input_count;
 
     AxiLiteControl axi_lite_control (
@@ -182,6 +187,16 @@ module FullPipelineTestbench;
         $finish;
     end
 
+    // Count clock cycles after reset.
+    always_ff @(posedge clk) begin
+        if (reset) begin
+            cycle_count <= 0;
+        end
+        else begin
+            cycle_count <= cycle_count + 1;
+        end
+    end
+
     // Count samples accepted by the FFT.
     always_ff @(posedge clk) begin
         if (reset) begin
@@ -224,6 +239,10 @@ module FullPipelineTestbench;
         s_axi_rready = 1'b1;
 
         input_count = 0;
+
+        frame_start_cycle = 0;
+        frame_end_cycle = 0;
+        frame_cycles = 0;
 
         input_file = $fopen(
             "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
@@ -283,6 +302,9 @@ module FullPipelineTestbench;
         // Configure the FFT.
         send_fft_configuration();
 
+        // Start measuring one complete frame.
+        frame_start_cycle = cycle_count;
+
         // Send one complete 1024-sample frame.
         while (
             !$feof(input_file)
@@ -307,6 +329,20 @@ module FullPipelineTestbench;
 
         // Wait for the strongest frequency above the threshold.
         wait (peak_valid == 1'b1);
+
+        frame_end_cycle = cycle_count;
+        frame_cycles =
+            frame_end_cycle - frame_start_cycle;
+
+        $display(
+            "Frame processing cycles = %0d",
+            frame_cycles
+        );
+
+        $display(
+            "Frame processing time = %0d ns",
+            frame_cycles * 10
+        );
 
         @(negedge clk);
 
