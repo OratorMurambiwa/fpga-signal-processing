@@ -1,4 +1,4 @@
-// Test the full signal-processing pipeline with backpressure.
+// Test the full signal-processing pipeline with AXI4-Lite control.
 
 `timescale 1ns / 1ps
 
@@ -15,8 +15,8 @@ module FullPipelineTestbench;
     logic signed [15:0] fir_output_data;
     logic               fir_output_valid;
 
-    // FFT setup signals.
-    logic [15:0] fft_config_data;
+    // FFT configuration signals.
+    logic [23:0] fft_config_data;
     logic        fft_config_valid;
     logic        fft_config_ready;
 
@@ -32,7 +32,34 @@ module FullPipelineTestbench;
     logic        fft_output_ready;
     logic        fft_output_last;
 
-    // Final peak result.
+    // AXI4-Lite write address channel.
+    logic [3:0] s_axi_awaddr;
+    logic       s_axi_awvalid;
+    logic       s_axi_awready;
+
+    // AXI4-Lite write data channel.
+    logic [31:0] s_axi_wdata;
+    logic        s_axi_wvalid;
+    logic        s_axi_wready;
+
+    // AXI4-Lite write response channel.
+    logic [1:0] s_axi_bresp;
+    logic       s_axi_bvalid;
+    logic       s_axi_bready;
+
+    // AXI4-Lite read address channel.
+    logic [3:0] s_axi_araddr;
+    logic       s_axi_arvalid;
+    logic       s_axi_arready;
+
+    // AXI4-Lite read data channel.
+    logic [31:0] s_axi_rdata;
+    logic [1:0]  s_axi_rresp;
+    logic        s_axi_rvalid;
+    logic        s_axi_rready;
+
+    logic [31:0] threshold;
+
     logic        peak_valid;
     logic [9:0]  peak_bin;
     logic [32:0] peak_magnitude;
@@ -44,8 +71,34 @@ module FullPipelineTestbench;
 
     logic [9:0] fft_input_count;
 
+    AxiLiteControl axi_lite_control (
+        .clk(clk),
+        .reset(reset),
 
-    // Run the input through the FIR first.
+        .s_axi_awaddr(s_axi_awaddr),
+        .s_axi_awvalid(s_axi_awvalid),
+        .s_axi_awready(s_axi_awready),
+
+        .s_axi_wdata(s_axi_wdata),
+        .s_axi_wvalid(s_axi_wvalid),
+        .s_axi_wready(s_axi_wready),
+
+        .s_axi_bresp(s_axi_bresp),
+        .s_axi_bvalid(s_axi_bvalid),
+        .s_axi_bready(s_axi_bready),
+
+        .s_axi_araddr(s_axi_araddr),
+        .s_axi_arvalid(s_axi_arvalid),
+        .s_axi_arready(s_axi_arready),
+
+        .s_axi_rdata(s_axi_rdata),
+        .s_axi_rresp(s_axi_rresp),
+        .s_axi_rvalid(s_axi_rvalid),
+        .s_axi_rready(s_axi_rready),
+
+        .threshold(threshold)
+    );
+
     FirFilter fir_filter (
         .clk(clk),
         .reset(reset),
@@ -59,8 +112,6 @@ module FullPipelineTestbench;
         .output_data(fir_output_data)
     );
 
-
-    // Run the filtered samples through the FFT.
     FftCore fft_core (
         .aclk(clk),
 
@@ -86,8 +137,6 @@ module FullPipelineTestbench;
         .event_data_out_channel_halt()
     );
 
-
-    // Find the magnitude and strongest FFT bin.
     FrequencyAnalysisPipeline analysis_pipeline (
         .clk(clk),
         .reset(reset),
@@ -97,24 +146,21 @@ module FullPipelineTestbench;
         .fft_ready(fft_output_ready),
         .fft_last(fft_output_last),
 
+        .threshold(threshold),
+
         .peak_valid(peak_valid),
         .peak_bin(peak_bin),
         .peak_magnitude(peak_magnitude)
     );
 
-
-    // Send the filtered sample into the real side of the FFT.
     assign fft_input_data[15:0] = fir_output_data;
     assign fft_input_data[31:16] = 16'sd0;
 
     assign fft_input_valid = fir_output_valid;
 
-
-    // Tell the FFT when the last sample in the frame arrives.
     assign fft_input_last =
         fir_output_valid
         && (fft_input_count == 10'd1023);
-
 
     // 100 MHz clock.
     initial begin
@@ -125,67 +171,123 @@ module FullPipelineTestbench;
         end
     end
 
+    // Stop automatically if the test gets stuck.
+    initial begin
+        #1_000_000;
 
-    // Keep track of how many samples enter the FFT.
+        $display(
+            "FAIL: Full pipeline simulation timed out."
+        );
+
+        $finish;
+    end
+
+    // Count samples accepted by the FFT.
     always_ff @(posedge clk) begin
-
         if (reset) begin
-
             fft_input_count <= 10'd0;
-
         end
-        else if (fft_input_valid && fft_input_ready) begin
-
+        else if (
+            fft_input_valid
+            && fft_input_ready
+        ) begin
             if (fft_input_last) begin
                 fft_input_count <= 10'd0;
             end
             else begin
-                fft_input_count <= fft_input_count + 10'd1;
+                fft_input_count <=
+                    fft_input_count + 10'd1;
             end
-
         end
-
     end
 
-
     initial begin
-
         reset = 1'b1;
 
         fir_input_data = 16'sd0;
         fir_input_valid = 1'b0;
 
-        fft_config_data = 16'd0;
+        fft_config_data = 24'd0;
         fft_config_valid = 1'b0;
 
-        fft_output_ready = 1'b1;
+        s_axi_awaddr = 4'd0;
+        s_axi_awvalid = 1'b0;
+
+        s_axi_wdata = 32'd0;
+        s_axi_wvalid = 1'b0;
+
+        s_axi_bready = 1'b1;
+
+        s_axi_araddr = 4'd0;
+        s_axi_arvalid = 1'b0;
+
+        s_axi_rready = 1'b1;
 
         input_count = 0;
-
 
         input_file = $fopen(
             "C:/Users/muram/fpga-signal-processing/simulation/data/signal_samples.txt",
             "r"
         );
 
-
         if (input_file == 0) begin
-            $display("ERROR: Could not open input file.");
+            $display(
+                "ERROR: Could not open input file."
+            );
+
             $finish;
         end
-
 
         repeat (5) @(posedge clk);
 
         @(negedge clk);
         reset = 1'b0;
 
+        // Set the detection threshold.
+        write_register(
+            4'h0,
+            32'd5000000
+        );
 
+        $display(
+            "AXI4-Lite threshold = %0d",
+            threshold
+        );
+
+        if (threshold == 32'd5000000) begin
+            $display(
+                "PASS: AXI4-Lite configured the threshold."
+            );
+        end
+        else begin
+            $display(
+                "FAIL: Threshold configuration failed."
+            );
+        end
+
+        // Read the threshold back.
+        read_register(4'h0);
+
+        if (s_axi_rdata == 32'd5000000) begin
+            $display(
+                "PASS: AXI4-Lite threshold readback correct."
+            );
+        end
+        else begin
+            $display(
+                "FAIL: AXI4-Lite threshold readback = %0d",
+                s_axi_rdata
+            );
+        end
+
+        // Configure the FFT.
         send_fft_configuration();
 
-
-        // Send one full FFT frame.
-        while (!$feof(input_file) && input_count < 1024) begin
+        // Send one complete 1024-sample frame.
+        while (
+            !$feof(input_file)
+            && input_count < 1024
+        ) begin
 
             scan_result = $fscanf(
                 input_file,
@@ -194,46 +296,19 @@ module FullPipelineTestbench;
             );
 
             if (scan_result == 1) begin
-
                 send_sample(sample);
-                input_count = input_count + 1;
 
+                input_count =
+                    input_count + 1;
             end
-
         end
-
 
         $fclose(input_file);
 
-
-        // Wait until FFT output starts.
-        wait (fft_output_valid == 1'b1);
-
-        @(negedge clk);
-
-        $display("Applying FFT output backpressure.");
-
-        fft_output_ready = 1'b0;
-
-
-        // Stall FFT output for 10 clock cycles.
-        repeat (10) begin
-            @(posedge clk);
-        end
-
-
-        @(negedge clk);
-
-        fft_output_ready = 1'b1;
-
-        $display("Releasing FFT output backpressure.");
-
-
-        // Wait for the strongest frequency result.
+        // Wait for the strongest frequency above the threshold.
         wait (peak_valid == 1'b1);
 
         @(negedge clk);
-
 
         $display(
             "Full pipeline peak bin = %0d",
@@ -245,78 +320,136 @@ module FullPipelineTestbench;
             peak_magnitude
         );
 
-
+        // The 1 kHz component should appear near bin 51.
         if (
             peak_bin == 10'd51
             || peak_bin == 10'd52
         ) begin
-
             $display(
-                "PASS: Full pipeline survived backpressure."
+                "PASS: Full pipeline detected the expected frequency."
             );
-
         end
         else begin
-
             $display(
-                "FAIL: Unexpected peak bin after backpressure."
+                "FAIL: Unexpected peak bin."
             );
-
         end
 
+        if (
+            peak_magnitude
+            >= {1'b0, threshold}
+        ) begin
+            $display(
+                "PASS: Peak passed the AXI4-Lite threshold."
+            );
+        end
+        else begin
+            $display(
+                "FAIL: Peak did not meet the threshold."
+            );
+        end
 
         repeat (10) @(posedge clk);
 
         $finish;
-
     end
 
-
-    // Use the same FFT settings as before.
-    task send_fft_configuration;
+    // Write one AXI4-Lite register.
+    task write_register(
+        input logic [3:0]  address,
+        input logic [31:0] data
+    );
         begin
+            @(negedge clk);
+
+            s_axi_awaddr = address;
+            s_axi_awvalid = 1'b1;
+
+            s_axi_wdata = data;
+            s_axi_wvalid = 1'b1;
+
+            do begin
+                @(posedge clk);
+            end
+            while (
+                !(
+                    s_axi_awready
+                    && s_axi_wready
+                )
+            );
 
             @(negedge clk);
 
-            fft_config_data = 16'h0557;
-            fft_config_valid = 1'b1;
+            s_axi_awvalid = 1'b0;
+            s_axi_wvalid = 1'b0;
 
+            wait (s_axi_bvalid == 1'b1);
+
+            @(posedge clk);
+        end
+    endtask
+
+    // Read one AXI4-Lite register.
+    task read_register(
+        input logic [3:0] address
+    );
+        begin
+            @(negedge clk);
+
+            s_axi_araddr = address;
+            s_axi_arvalid = 1'b1;
+
+            do begin
+                @(posedge clk);
+            end
+            while (!s_axi_arready);
+
+            @(negedge clk);
+
+            s_axi_arvalid = 1'b0;
+
+            wait (s_axi_rvalid == 1'b1);
+
+            @(negedge clk);
+        end
+    endtask
+
+    // Send the 24-bit Radix-2 Lite FFT configuration.
+    task send_fft_configuration;
+        begin
+            @(negedge clk);
+
+            fft_config_data = 24'h0AAAAD;
+            fft_config_valid = 1'b1;
 
             while (!fft_config_ready) begin
                 @(negedge clk);
             end
 
-
             @(negedge clk);
 
             fft_config_valid = 1'b0;
-
         end
     endtask
 
-
-    // Hold valid until the FIR accepts the sample.
+    // Hold each sample until the FIR accepts it.
     task send_sample(
         input logic signed [15:0] sample_value
     );
         begin
-
             @(negedge clk);
 
             fir_input_data = sample_value;
             fir_input_valid = 1'b1;
-
 
             do begin
                 @(posedge clk);
             end
             while (!fir_input_ready);
 
-
             @(negedge clk);
 
             fir_input_valid = 1'b0;
-
         end
     endtask
 
