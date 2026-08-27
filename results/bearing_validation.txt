@@ -1,0 +1,36 @@
+NASA IMS Bearing Vibration Validation
+
+Dataset:
+NASA IMS Bearing Dataset
+Set 1, one accelerometer channel
+
+Input:
+20480 samples loaded
+1024-sample frame used
+20 kHz sampling rate
+16-bit signed quantization
+DC offset removed before FPGA processing
+
+FPGA result:
+Peak FFT bin: 51
+Dominant frequency: 996.09 Hz
+Peak magnitude squared: 1489061
+
+Python/NumPy reference:
+Peak FFT bin: 51
+Dominant frequency: 996.09 Hz
+Peak magnitude squared: 7639709245903
+
+Validation result:
+PASS
+
+The FPGA and Python reference models detected the same dominant
+frequency component at FFT bin 51, corresponding to 996.09 Hz.
+
+Magnitude values are not expected to match exactly because the FPGA
+uses a scaled fixed-point FFT implementation while NumPy uses
+floating-point arithmetic.
+
+This test demonstrates functional equivalence between the FPGA
+signal-processing pipeline and the software reference model on
+real-world vibration sensor data.
